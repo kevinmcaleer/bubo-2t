@@ -1,5 +1,5 @@
 import tweepy
-from secrets import consumer_key, consumer_secret, access_token, access_token_secret
+from secret import consumer_key, consumer_secret, access_token, access_token_secret
 
 def main():
     twitter_auth_keys = {
@@ -18,14 +18,18 @@ def main():
             twitter_auth_keys['access_token_secret']
             )
     api = tweepy.API(auth)
+    # client = tweepy.Client(bearer_token,consumer_key, consumer_secret, access_token, access_token_secret)
 
 
     # Upload image
-    media = api.media_upload("william_gibson.jpg")
+    # media = ['test.jpg']
+    media = api.media_upload("test.jpg")
 
     # Post tweet with image
-    tweet = "Great scifi author or greatest scifi author? #williamgibson"
+    tweet = "Test Toot from Bubo-2T.\nThese are not the droids you're looking for. Move along."
     post_result = api.update_status(status=tweet, media_ids=[media.media_id])
-
+    # client.text = tweet
+    # result = client.create_tweet(text = tweet, media_ids=media)
+    print(f'result is: {result}')
 if __name__ == "__main__":
     main()
