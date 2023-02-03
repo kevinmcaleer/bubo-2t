@@ -1,6 +1,8 @@
 # Bubo-2T
 
-This is a fun project, to create a companion robot that will take photos based on a hand gesture. It will then tweet or toot out the picture, with a randomly selected message. I've created the toot_randomiser because Twitter will think that there has been a mistake if the same message is tweeted multiple times, and I intend to walk round with this robot at the Makers Central event and have people post for pictures, which it will then Toot out.  
+This is a fun project, to create a companion robot that will take photos based on a hand gesture. It will then tweet or toot out the picture, with a randomly selected message. 
+
+I've created the `toot_randomiser.py` because Twitter will think that there has been a mistake if the same message is tweeted multiple times, and I intend to walk round with this robot at the Makers Central event where people can pose for pictures, make the hand gesture, which it will then Toot out.  
 
 To follow along with this project, you'll need a Raspberry Pi (I'm using the 4, 8gb model), running on the latest Raspberry Pi OS (I'm using the 64bit version).
 
