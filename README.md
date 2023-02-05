@@ -1,4 +1,6 @@
-# Bubo-2T
+[Read the full article here on Kevsrobots.com](https://www.kevsrobots.com/blog/bubo-2t)
+
+## Bubo-2T
 
 This is a fun project, to create a companion robot that will take photos based on a hand gesture. It will then tweet or toot out the picture, with a randomly selected message. 
 
@@ -10,7 +12,7 @@ There is a bug or issue with the new camera library libcamera2 and OpenCV & CVZo
 
 ---
 
-## Virtual environment
+### Virtual environment
 
 You'll need to create a new virtual environment for Python using the command:
 
