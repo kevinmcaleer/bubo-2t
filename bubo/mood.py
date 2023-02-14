@@ -66,9 +66,9 @@ class Quirky_mood(Mood):
     def tick(self):
         super().tick()
             
-class Bubo():
+# class Bubo():
     
-    angry_mood = Mood("angry")
+#     angry_mood = Mood("angry")
     
-    def __init__(self):
-        self.mood = "neutral"
+#     def __init__(self):
+#         self.mood = "neutral"

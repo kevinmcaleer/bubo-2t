@@ -1,6 +1,6 @@
 # Mood test
 
-from mood import Bubo, Mood
+from bubo.mood import Bubo, Mood
 
 bubo = Bubo()
 bubo.mood = "angry"
