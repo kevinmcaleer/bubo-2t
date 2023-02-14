@@ -1,5 +1,16 @@
 # Moods
 
+# Moods:
+# * Angry (red eyes, eyes half closed)
+# * Happy (eyes wide, glowing white)
+# * Sleepy (leds dim, eyes half open)
+# * Sad (eyes half open, mouth half open, yellow lights dim)
+# * Shocked mouth open eyes wide, eyes strobing)
+# * Chatty (beak opens and closes a lot
+# * Bored (one eye half open, one eye open)
+# * Neutral (eyes open, blink every 10 seconds, yellow glow)
+# * Quirky - one eye open, one eye half, beak half open, rainbow colours
+
 class Mood():
     
     cycle = 0
@@ -31,20 +42,25 @@ class Mood():
         self.cycle = 0
     
 class Angry_Mood(Mood):
-# angry
-# red eyes
-# eyes half closed
-# mouth open and close
+    """
+    Mood name: Angry
+    Eye colour: red
+    Eye Servos: both half closed
+    Mouth: open and close
+    """
+
     def __init__(self):
         self.super().__init__(name="angry", ticks=20)
         
         def tick(self):
             super().tick()
+
+        
             
 class Quirky_mood(Mood):
     def __init__(self):
         self.super().__init__(name="angry", ticks=20)
-        self.bubo
+        self.bubo.left
         
         
     def tick(self):
