@@ -5,7 +5,8 @@
 from time import sleep
 # from gpiozero import Servo
 from .toot_randomiser import RandomToots
-from servo import servo2040, Servo
+from .super_servo import Super_Servo
+from servo import servo2040
 import plasma
 from plasma import WS2812
 import math
@@ -33,23 +34,26 @@ MOUTH_MAX_ANGLE = 45
 
 EYE_MIN_PULSE = 1000
 EYE_MAX_PULSE = 2000
-EYE_MIN_ANGLE = -45
-EYE_MAX_ANGLE = 45
+EYE_MIN_ANGLE = -30
+EYE_MAX_ANGLE = 14
 
 class Bubo2t():
-    __mouth_open = -45 # open
-    __mouth_close = 45 # closed
-    __eyes_open = -45 # open
-    __eyes_close = 45 # closed
+    __mouth_open = MOUTH_MIN_ANGLE # open
+    __mouth_close = MOUTH_MAX_ANGLE # closed
+    __eyes_open =  EYE_MIN_ANGLE # open
+    __eyes_close = EYE_MAX_ANGLE # closed
 
     def __init__(self, left_eye_pin=LEFT_EYE_PIN, right_eye_pin=RIGHT_EYE_PIN, mouth_pin=MOUTH_PIN):
         self.toot_randomiser = RandomToots()
 
         # Setup the Servos
-        self.left_eye = Servo(left_eye_pin)
-        self.right_eye = Servo(right_eye_pin)
-        self.mouth = Servo(mouth_pin)
-
+        self.left_eye = Super_Servo(left_eye_pin)
+        self.right_eye = Super_Servo(right_eye_pin)
+        self.mouth = Super_Servo(mouth_pin)
+        self.left_eye.name = "Left Eye"
+        self.right_eye.name = "Right Eye"
+        self.mouth.name = "Mouth"
+        
         print('Bubo2t init')
         print(f'mouth pin = {self.mouth.pin()}')
         print(f'left eye pin = {self.left_eye.pin()}')
@@ -60,8 +64,8 @@ class Bubo2t():
         print('-'*10)
 
         # Apply the calibration to Mouth, Left Eye and Right Eye
-        mouth_cal.apply_two_pairs(MOUTH_MIN_PULSE, MOUTH_MAX_PULSE, MOUTH_MIN_ANGLE, MOUTH_MAX_ANGLE)
         mouth_cal = self.mouth.calibration()
+        mouth_cal.apply_two_pairs(MOUTH_MIN_PULSE, MOUTH_MAX_PULSE, MOUTH_MIN_ANGLE, MOUTH_MAX_ANGLE)
         self.mouth.calibration(mouth_cal)
 
         eye_cal = self.left_eye.calibration()
@@ -74,11 +78,34 @@ class Bubo2t():
         
     def tick(self):
         """ Perform a tick """
-        print('tick')
+        # print('tick')
 
-        # TODO perform current action
         # TODO check for new action
-        sleep(1)
+
+        if (not self.left_eye.tick()) or (not self.right_eye.tick()) or (not self.mouth.tick()):
+            self.left_eye.tick()
+            self.right_eye.tick()
+            self.mouth.tick()
+            return False
+        else:
+            return True
+        
+    def blink(self, duration):
+        "blink eyes"
+
+        self.left_eye.transition = 'ease_in_sine'
+        self.right_eye.transition = 'ease_in_sine'
+        self.left_eye.duration_in_seconds = duration
+        self.right_eye.duration_in_seconds = duration
+
+        self.left_eye.target_angle = - self.__eyes_close
+        self.right_eye.target_angle = self.__eyes_close
+        self.left_eye.change_in_angle = self.left_eye.target_angle - self.left_eye.start_angle
+        self.right_eye.change_in_angle = self.right_eye.target_angle - self.right_eye.start_angle
+
+        self.left_eye.tick_start()
+        self.right_eye.tick_start()
+        sleep(0.1)
 
     def mouth_open(self):
         """ Open the mouth """
@@ -86,8 +113,8 @@ class Bubo2t():
         print('mouth_open')
 
         # Move the servos to different angles
-        from_val = float(self.mouth.value())
-        val = float(self.__mouth_open)
+        from_val = self.mouth.value()
+        val = self.__mouth_open
         print(f'moving mouth from {from_val} to {val}')
         self.mouth.value(val)
         sleep(0.1)
@@ -104,19 +131,43 @@ class Bubo2t():
         self.mouth.value(val)
         sleep(0.1)
 
-    def eyes_open(self, speed:None):
+    def eyes_open(self, duration):
         """ Open the eyes """
 
-        self.right_eye.value(self.__eyes_open)
-        self.left_eye.value(self.__eyes_open)
-        sleep(0.1)
+        "open eyes"
 
-    def eyes_close(self):
+        self.left_eye.transition = 'ease_in_sine'
+        self.right_eye.transition = 'ease_in_sine'
+        self.left_eye.duration_in_seconds = duration
+        self.right_eye.duration_in_seconds = duration
+
+        self.left_eye.target_angle = - self.__eyes_open
+        self.right_eye.target_angle = self.__eyes_open
+        self.left_eye.change_in_value = self.left_eye.target_angle - self.left_eye.current_angle
+        self.right_eye.change_in_value = self.right_eye.target_angle - self.right_eye.current_angle
+
+        self.left_eye.tick_start()
+        self.right_eye.tick_start()
+        # sleep(0.1)
+
+    def eyes_close(self, duration):
         """ Close the eyes """
         
-        self.right_eye.value(self.__eyes_close)
-        self.left_eye.value(self.__eyes_close)
-        sleep(0.1)
+        "close eyes"
+
+        self.left_eye.transition = 'ease_in_sine'
+        self.right_eye.transition = 'ease_in_sine'
+        self.left_eye.duration_in_seconds = duration
+        self.right_eye.duration_in_seconds = duration
+
+        self.left_eye.target_angle = - self.__eyes_close
+        self.right_eye.target_angle = self.__eyes_close
+        self.left_eye.change_in_value = self.left_eye.target_angle - self.left_eye.current_angle
+        self.right_eye.change_in_value = self.right_eye.target_angle - self.right_eye.current_angle
+
+        self.left_eye.tick_start()
+        self.right_eye.tick_start()
+        # sleep(0.1)
     
     def open_left_eye(self):
         """ Open the left eye """

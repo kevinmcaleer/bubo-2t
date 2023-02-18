@@ -3,10 +3,23 @@ from time import sleep
 
 bubo = Bubo2t()
 
-bubo.mouth_open()
-sleep(0.5)
 
-bubo.mouth_close()
-sleep(0.5)
+bubo.eyes_close(duration=1)
+while not bubo.tick():
+    bubo.tick()
 
-bubo.mouth.to_mid()
+bubo.eyes_open(duration=.5)
+while not bubo.tick():
+    bubo.tick()
+
+bubo.eyes_close(duration=.5)
+while not bubo.tick():
+    bubo.tick()
+    
+bubo.eyes_open(duration=.5)
+while not bubo.tick():
+    bubo.tick()
+
+bubo.eyes_close(duration=.5)
+while not bubo.tick():
+    bubo.tick()
