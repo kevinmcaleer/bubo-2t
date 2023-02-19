@@ -212,7 +212,3 @@ class Ease_in_out_back(TransitionBase):
             return 0.5 * (t * t * ((s + 1) * t - s))
         t -= 2
         return 0.5 * (t * t * ((s + 1) * t + s) + 2)
-
-
-
-

@@ -9,7 +9,7 @@ from .easing import Linear, Ease_in_circ, Ease_in_cubic, Ease_in_expo, Ease_in_q
 from time import sleep, ticks_ms, ticks_diff
 from servo import Servo, servo2040
 
-SHORT_SLEEP = 0.01
+SHORT_SLEEP = 0.0001
 
 def map_angle(x, in_min, in_max, out_min, out_max):
     """ maps the value between the in and out ranges and returns a float"""
@@ -78,7 +78,7 @@ class Super_Servo():
         """ Set the angle of the servo """
         self.__current_angle = value
         self.__servo.value(value)
-#         sleep(SHORT_SLEEP)
+        sleep(SHORT_SLEEP)
 
     @property
     def current_angle(self):
@@ -103,12 +103,49 @@ class Super_Servo():
 
         if value == 'linear_tween':        
             self.ease = Linear(self.start_angle,self.target_angle,self.duration)
-        if value =='ease_in_circ':
+        elif value =='ease_in_circ':
             self.ease = Ease_in_circ(self.start_angle,self.target_angle,self.duration)
-        if value =='ease_in_cubic':
+        elif value =='ease_in_cubic':
             self.ease = Ease_in_cubic(self.start_angle,self.target_angle,self.duration)
+        elif value =='ease_in_expo':
+            self.ease = Ease_in_expo(self.start_angle,self.target_angle,self.duration)
+        elif value =='ease_in_quad':
+            self.ease = Ease_in_quad(self.start_angle,self.target_angle,self.duration)
+        elif value =='ease_in_quart':
+            self.ease = Ease_in_quart(self.start_angle,self.target_angle,self.duration)
+        elif value =='ease_in_quint':
+            self.ease = Ease_in_quint(self.start_angle,self.target_angle,self.duration)
+        elif value =='ease_in_sine':
+            self.ease = Ease_in_sine(self.start_angle,self.target_angle,self.duration)
+        elif value =='ease_in_out_circ':
+            self.ease = Ease_in_out_circ(self.start_angle,self.target_angle,self.duration)
+        elif value =='ease_in_out_cubic':
+            self.ease = Ease_in_out_cubic(self.start_angle,self.target_angle,self.duration)
+        elif value =='ease_in_out_expo':
+            self.ease = Ease_in_out_expo(self.start_angle,self.target_angle,self.duration)
+        elif value =='ease_in_out_quad':
+            self.ease = Ease_in_out_quad(self.start_angle,self.target_angle,self.duration)
+        elif value =='ease_in_out_quart':
+            self.ease = Ease_in_out_quart(self.start_angle,self.target_angle,self.duration)
+        elif value =='ease_in_out_quint':
+            self.ease = Ease_in_out_quint(self.start_angle,self.target_angle,self.duration)
+        elif value =='ease_in_out_sine':
+            self.ease = Ease_in_out_sine(self.start_angle,self.target_angle,self.duration)
+        elif value =='ease_out_circ':
+            self.ease = Ease_out_circ(self.start_angle,self.target_angle,self.duration)
+        elif value =='ease_out_cubic':
+            self.ease = Ease_out_cubic(self.start_angle,self.target_angle,self.duration)
+        elif value =='ease_out_expo':
+            self.ease = Ease_out_expo(self.start_angle,self.target_angle,self.duration)
+        elif value =='ease_out_quad':
+            self.ease = Ease_out_quad(self.start_angle,self.target_angle,self.duration)
+        elif value =='ease_out_quart':
+            self.ease = Ease_out_quart(self.start_angle,self.target_angle,self.duration)
+        elif value =='ease_out_quint':
+            self.ease = Ease_out_quint(self.start_angle,self.target_angle,self.duration)
+        elif value =='ease_out_sine':
+            self.ease = Ease_out_sine(self.start_angle,self.target_angle,self.duration)
         
-    
     @property
     def duration(self):
         return self.__duration
@@ -124,8 +161,6 @@ class Super_Servo():
     @duration_in_seconds.setter
     def duration_in_seconds(self, value):
         duration = (value * 1000)
-#         print(f"duration set to {duration}")
-
         self.__duration = duration
 
     @property
@@ -188,7 +223,7 @@ class Super_Servo():
         return self.current_time / 1000
             
     def tick(self):
-        remaining_time = self.__duration - self.elapsed_time
+#         remaining_time = self.__duration - self.elapsed_time
         
         if self.elapsed_time_in_seconds > self.duration_in_seconds:
             self.__current_angle = self.target_angle
