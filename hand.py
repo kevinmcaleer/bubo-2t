@@ -13,6 +13,7 @@ detector = HandDetector(detectionCon=0.5, maxHands=2)
 while True:
     #  Get image frame
     success, img = cap.read()
+    img = cv2.flip(img, 0)
     # print(img)
 
     # cv2.imshow("Image", img)
