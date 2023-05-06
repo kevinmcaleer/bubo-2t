@@ -228,6 +228,7 @@ def tired(seconds):
     print('tired')
     updates = 100
     servo_val = 60
+    val = 0
     for j in range(updates,0,-1):
         for i in range(NUM_LEDS):
             
