@@ -1,27 +1,47 @@
-from servo import servo2040, Servo
-import plasma
-from plasma import WS2812
+# from servo import servo2040, Servo
+#import plasma
+#from plasma import WS2812
 from time import sleep
 import math
 
-mouth = Servo(servo2040.SERVO_1)
+from inventorhatmini import SERVO_1, SERVO_2, SERVO_3, SERVO_4, InventorHATMini
+from ioexpander import OUT
+from inventorhatmini.plasma import Plasma
+from ioexpander.servo import Servo
+
+NUM_LEDS = 24
+NUM_SERVOS = 3
+LED_SERVO_PIN = 22
+
+board = InventorHATMini(init_servos=False)
+
+board.servos = [Servo(board.ioe, board.IOE_SERVO_PINS[i]) for i in range(NUM_SERVOS)]
+
+# board.servo_pin_mode(SERVO_1, 
+# mouth = Servo(servo2040.SERVO_1)
+
+#mouth = board.servos[SERVO_1]
 
 # cal = mouth.calibration()
 # cal.first_value(-10)
 # cal.last_value(+40)
 # mouth.calibration(cal)
 
-left_eye = Servo(servo2040.SERVO_3)
-right_eye = Servo(servo2040.SERVO_2)
-NUM_LEDS = 24
+# left_eye = Servo(servo2040.SERVO_3)
+# right_eye = Servo(servo2040.SERVO_2)
+
+#left_eye = board.servos[SERVO_3]
+#right_eye = board.servos[SERVO_2]
+
 SPEED = 5           # The speed that the LEDs will cycle at
 BRIGHTNESS = 0.4    # The brightness of the LEDs
 UPDATES = 50        # How many times the LEDs will be updated per second
 
 # Create the LED bar, using PIO 1 and State Machine 0
-led_bar = WS2812(NUM_LEDS, 1, 0, servo2040.SDA, color_order=plasma.COLOR_ORDER_RGB)
+#led_bar = WS2812(NUM_LEDS, 1, 0, servo2040.SDA, color_order=plasma.COLOR_ORDER_RGB)
+led_bar = Plasma(NUM_LEDS, LED_SERVO_PIN)
 
-led_bar.start()
+#led_bar.start()
 SWEEPS = 3              # How many sweeps of the servo to perform
 STEPS = 10              # The number of discrete sweep steps
 STEPS_INTERVAL = 0.5    # The time in seconds between each step of the sequence
@@ -228,7 +248,6 @@ def tired(seconds):
     print('tired')
     updates = 100
     servo_val = 60
-    val = 0
     for j in range(updates,0,-1):
         for i in range(NUM_LEDS):
             
