@@ -6,8 +6,8 @@ certifi==2022.12.7
 charset-normalizer==3.0.1
 contourpy==1.0.7
 cvzone==1.5.6
-cycler==0.11.0
-flatbuffers==20181003210633
+# cycler==0.11.0
+# flatbuffers==20181003210633
 fonttools==4.38.0
 gast==0.4.0
 google-auth==2.16.0

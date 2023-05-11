@@ -1,0 +1,17 @@
+# set base image (host OS)
+FROM python:3.9.2-alpine
+
+# FROM alpine:latest as getfiles
+RUN apk --no-cache add --update git
+RUN mkdir /src
+RUN mkdir /code
+WORKDIR /src
+RUN git clone https://www.github.com/kevinmcaleer/bubo-2t .
+
+RUN pip install pip --upgrade
+RUN pip install --no-cache-dir -r requirements.txt
+
+EXPOSE 80
+
+# command to run on container start
+CMD [ "python3", "./toot.py" ]
