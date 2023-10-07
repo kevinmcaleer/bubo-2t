@@ -1,6 +1,3 @@
-# On Raspberry Pi 4 with Libcamera2 installed use
-# `libcamerify python` to start python 
-
 from cvzone.HandTrackingModule import HandDetector
 import cv2
 
