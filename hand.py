@@ -10,7 +10,7 @@ detector = HandDetector(detectionCon=0.5, maxHands=2)
 while True:
     #  Get image frame
     success, img = cap.read()
-    img = cv2.flip(img, 0)
+    # img = cv2.flip(img, 0)
     # print(img)
 
     # cv2.imshow("Image", img)
@@ -61,8 +61,8 @@ while True:
 
     # Display
     finger_count = str(total_fingers)
-    cv2.putText(img, gesture, (410, 215), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 6)
-    cv2.putText(img, finger_count, (410,100),cv2.FONT_HERSHEY_PLAIN, 4, (255,255,255),6)
+    cv2.putText(img, gesture, (410, 215), cv2.FONT_HERSHEY_PLAIN, 4, (237, 34, 13), 6)
+    cv2.putText(img, finger_count, (410,100),cv2.FONT_HERSHEY_PLAIN, 4, (237,34,13),6)
     cv2.imshow("Image", img)
     cv2.waitKey(1)
     
